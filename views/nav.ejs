@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Navbar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .nav-bar {
+            width: 100%;
+            height: 80px;
+            background-color: black;
+            color: aliceblue;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            position: relative;
+        }
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+        .nav-links a {
+            color: aliceblue;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .nav-links a:hover {
+            color: #ffb400;
+        }
+        .center-logo {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .image {
+            height: 60px;
+        }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: aliceblue;
+            margin: 4px 0;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                background-color: black;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                padding: 10px 0;
+                z-index: 1;
+            }
+            .nav-links a {
+                padding: 10px;
+                text-align: center;
+                width: 100%;
+                font-size: 18px;
+            }
+            .hamburger {
+                display: flex;
+            }
+            .center-logo {
+                position: static;
+                transform: none;
+            }
+            .nav-bar {
+                padding: 0 20px;
+            }
+        }
+
+        /* Show menu when hamburger is clicked */
+        .nav-links.show {
+            display: flex;
+        }
+    </style>
+    <script>
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('show');
+        }
+    </script>
+</head>
+<body>
+<div class="nav-bar">
+    <div class="hamburger" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <img src="/image/download (22).png" class="image center-logo" alt="Logo">
+    <div class="nav-links">
+        <a href="#">Venue</a>
+        <a href="#">Events</a>
+        <a href="#">Gallery</a>
+        <a href="#">Dress Code</a>
+        <a href="#">Restaurant</a>
+        <a href="#">Membership</a>
+        <a href="#">Reserve</a>
+        <a href="#">Contact</a>
+    </div>
+</div>
+</body>
+</html>

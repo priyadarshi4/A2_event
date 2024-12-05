@@ -1,0 +1,1742 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Container Slideshow</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+:root {
+    --bg-color: #0f0f1a;
+    --text-color: #ffffff;
+    --primary-color: #ff6b6b;
+    --secondary-color: #feca57;
+    --tertiary-color: #5f27cd;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    overflow-x: hidden;
+    display: grid;
+   place-items: center;
+  
+}
+
+.nav-bar {
+            width: 100%;
+            height: 80px;
+            color: aliceblue;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+        }
+        .nav-section {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            padding: 100px;
+        }
+        .nav-section a {
+            color: aliceblue;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .nav-section a:hover {
+            color:#ff1a75;
+        }
+        .image {
+            height: 200px;
+            padding-top:30px;
+        }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: aliceblue;
+            margin: 4px 0;
+        }
+        .menu {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .nav-section {
+                display: none;
+                flex-direction: column;
+                background-color: black;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                z-index: 1;
+            }
+            .nav-section a {
+                padding: 10px;
+                text-align: center;
+                width: 100%;
+                font-size: 18px;
+            }
+            .hamburger {
+                display: flex;
+            }
+            .nav-bar {
+                padding-right: 20px;
+            }
+            .image{
+                height: 150px;
+                position: relative;
+                left:-40px;
+                top:-10px;
+    
+            }
+        }
+        /* Show menu when hamburger is clicked */
+        .nav-section.show {
+            display: flex;
+        }
+.container {
+    width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.top-slider {
+    position: relative;
+    height: 400px;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.slides {
+    display: flex;
+    height: 100%;
+    transition: transform 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
+    object-fit:cover;
+}
+#s-1{
+    background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmNQpg8IU0DGDwmGvpb392ub6dEJouZFZ0pg&s);
+    background-size: cover; /* Ensures the image covers the div fully */
+    background-position: center; /* Centers the image within the div */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+}
+#s-2{
+    background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtt1JS9G6kMxlc2PjoJgDdd5P3uiZzLeNjNg&s);
+    background-size: cover; /* Ensures the image covers the div fully */
+    background-position: center; /* Centers the image within the div */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+}
+#s-3{
+    background-image: url(https://www.livemint.com/lm-img/img/2024/06/30/1600x900/CRICKET-WC-2024-T20-IND-RSA-36_1719728113722_1719728124935.jpg);
+    background-size: cover; /* Ensures the image covers the div fully */
+    background-position: center; /* Centers the image within the div */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+}
+#s-4{
+    background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsURQfD8PiSnH8zGRO5jcAV3VtnHbebWogRg&s);
+    background-size: cover; /* Ensures the image covers the div fully */
+    background-position: center; /* Centers the image within the div */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+}
+.slide {
+    flex: 0 0 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+   background-size: 200% 200%;
+
+}
+
+
+.slide p {
+    font-size: 1.5rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.slider-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slider-arrow:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.slider-arrow.left { left: 20px; }
+.slider-arrow.right { right: 20px; }
+
+.slider-nav {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+}
+
+.slider-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.slider-dot.active {
+    background-color: white;
+    transform: scale(1.2);
+}
+
+@keyframes coinFlip {
+    0%, 100% { transform: rotateY(0); }
+    50% { transform: rotateY(180deg); }
+}
+
+@keyframes swordSlash {
+    0%, 100% { transform: rotate(0); }
+    50% { transform: rotate(-30deg); }
+}
+
+@keyframes boxOpen {
+    0%, 100% { transform: scaleY(1); }
+    50% { transform: scaleY(0.8); }
+}
+
+@keyframes wheelSpin {
+    0% { transform: rotate(0); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes upgradeJump {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+@media (max-width: 768px) {
+    .top-slider {
+        height: 300px;
+    }
+
+    .slide h2 {
+        font-size: 2rem;
+    }
+
+    .slide p {
+        font-size: 1rem;
+    }
+
+    .game-options {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+}
+
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+@import url("https://fonts.cdnfonts.com/css/proxima-nova-condensed");
+
+
+.container{
+  max-width: 1200px;
+  margin: auto;
+  padding: 10px;
+}
+
+.card-slider {
+  display: flex;
+  white-space: nowrap;
+  overflow-x: auto;
+  margin-top: 10px;
+  gap: 30px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.card-slider::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.label-container {
+  display: flex;
+  align-items: center;
+}
+
+
+.label-container {
+  display: flex;
+  align-items: center;
+}
+
+.label-container h2 {
+  color: #111;
+  font-family: Poppins, serif;
+  margin-right: auto;
+  font-weight: 600;
+}
+
+.label-container .bi {
+  font-size: 18px;
+}
+
+.label-container button {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  color: #111;
+  cursor: pointer;
+  padding: 10px;
+  width: fit-content;
+  margin-left: 5px;
+}
+
+.label-container button:disabled {
+  background-color: whitesmoke;
+  cursor: not-allowed;
+  border: none;
+}
+
+.restaurant-card {
+  transition: transform 0.3s ease-in-out;
+  font-family: "Arial", sans-serif;
+  background: transparent;
+}
+
+.restaurant-card:hover {
+  cursor: pointer;
+  transform: scale(0.95);
+}
+
+.image-container {
+  position: relative;
+  display: inline-block;
+}
+
+.image-container img {
+  width: 350px;
+  height: 240px;
+  display: block;
+  border-radius: 20px;
+  object-fit: cover;
+  image-rendering: pixelated;
+}
+
+.image-container::after {
+    content: "";
+    position: absolute;
+    top: 80%;
+    left: 0;
+    right: 0;
+    border: none;
+    border-radius: 0 0 20px 20px;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1)100%);
+}
+
+.discount-badge {
+  position: absolute;
+  color: #fff;
+  bottom: 0;
+  left: 10px;
+  padding: 5px;
+  z-index: 2;
+  font-weight: bold;
+  font-size: 24px;
+  font-family: "Proxima Nova Condensed", sans-serif;
+}
+
+.restaurant-name {
+  font-weight: bold;
+  font-size: 24px;
+  margin: 0;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 16px;
+}
+
+.rating {
+  display: flex;
+  align-items: start;
+  margin-top: 5px;
+  font-weight: semi-bold;
+}
+
+.review-count {
+  margin-left: 5px;
+  font-weight: semi-bold;
+}
+
+.delivery-info {
+  display: flex;
+  font-size: 16px;
+  align-items: center;
+}
+
+.bi-star-fill {
+  color: green;
+}
+
+.bi-dot {
+  font-size: 26px;
+}
+
+
+@media only screen and (min-width: 320px) and (max-width: 767px) {
+
+    .container {
+        max-width: 350px;
+        margin: auto;
+        padding: 10px;
+      }
+      
+      /* Card Slider */
+      
+      .label-container h2 {
+        color: #111;
+        font-family: Poppins, serif;
+        margin-right: auto;
+        font-size: 18px;
+        font-weight: bold;
+      }
+      
+      .label-container i {
+        font-size: 14px;
+      }
+      
+      /* Card Slider */
+      
+      /* Restaurant Card */
+      .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        height: fit-content;
+        gap: 10px;
+        margin-top: 10px;
+      }
+      
+       .image-container img {
+        width: 180px;
+        height: 140px;
+        display: block;
+        border-radius: 20px;
+        object-fit: cover;
+        image-rendering: pixelated;
+      }
+      
+      .image-container::after {
+        content: "";
+        position: absolute;
+        top: 80%;
+        left: 0;
+        right: 0;
+        border: none;
+        border-radius: 0 0 20px 20px;
+        bottom: 0;
+        background: linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0) 0%,
+          rgba(0, 0, 0, 0.8) 100%
+        );
+      }
+      
+      .discount-badge {
+        position: absolute;
+        color: #fff;
+        bottom: 0;
+        left: 10px;
+        padding: 5px;
+        z-index: 2;
+        font-weight: bold;
+        font-size: 12px;
+        font-family: "Proxima Nova Condensed", sans-serif;
+      }
+      
+      .restaurant-name {
+        font-weight: bold;
+        font-size: 16px;
+        margin: 0;
+      }
+      
+      .info-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 10px;
+      }
+      
+      .rating {
+        display: flex;
+        align-items: start;
+        margin-top: 3px;
+        font-weight: semi-bold;
+      }
+      
+      .review-count {
+        margin-left: 3px;
+        font-weight: semi-bold;
+      }
+      
+      p{
+        font-size: 10px;
+      }
+  
+      .delivery-info {
+        display: flex;
+        font-size: 10px;
+        align-items: center;
+      }
+      
+      .bi-dot {
+        font-size: 16px;
+      }
+      /* Restaurant Card */
+}
+
+
+@media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1320px;
+  }
+}
+
+
+
+
+
+
+main {
+  position: relative;
+  width: 100%;
+  height: 25%;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+  border-radius: 50px;
+}
+
+.item {
+  width: 200px;
+  height: 300px;
+  list-style-type: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  background-position: center;
+  background-size: cover;
+  border-radius: 10px;
+  box-shadow: 0 20px 30px rgba(255,255,255,0.3) inset;
+  transition: transform 0.1s, left 0.75s, top 0.75s, width 0.75s, height 0.75s;
+
+  &:nth-child(1), &:nth-child(2) {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    transform: none;
+    border-radius: 0;
+    box-shadow: none;
+    opacity: 1;
+  }
+ 
+  &:nth-child(3) { left: 50%; }
+  &:nth-child(4) { left: calc(50% + 220px); }
+  &:nth-child(5) { left: calc(50% + 440px); }
+  &:nth-child(6) { left: calc(50% + 660px); opacity: 0; }
+}
+
+.content {
+  width: min(30vw,400px);
+  position: absolute;
+  top: 50%;
+  left: 3rem;
+  transform: translateY(-50%);
+  font: 400 0.85rem helvetica,sans-serif;
+  color: white;
+  text-shadow: 0 3px 8px rgba(0,0,0,0.5);
+  opacity: 0;
+  display: none;
+
+  & .title {
+    font-family: 'arial-black';
+    text-transform: uppercase;
+  }
+
+  & .description {
+    line-height: 1.7;
+    margin: 1rem 0 1.5rem;
+    font-size: 0.8rem;
+  }
+
+  & button {
+    width: fit-content;
+    background-color: rgba(0,0,0,0.1);
+    color: white;
+    border: 2px solid white;
+    border-radius: 0.25rem;
+    padding: 0.75rem;
+    cursor: pointer;
+  }
+}
+
+.item:nth-of-type(2) .content {
+  display: block;
+  animation: show 0.75s ease-in-out 0.3s forwards;
+}
+
+@keyframes show {
+  0% {
+    filter: blur(5px);
+    transform: translateY(calc(-50% + 75px));
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+.nav {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  user-select: none;
+
+  & .btn {
+    background-color: rgba(255,255,255,0.5);
+    color: rgba(0,0,0,0.7);
+    border: 2px solid rgba(0,0,0,0.6);
+    margin: 0 0.25rem;
+    padding: 0.75rem;
+    border-radius: 50%;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(255,255,255,0.3);
+    }
+  }
+}
+
+/* Medium-sized screens: tablets and small laptops */
+@media (width > 650px) and (width < 900px) {
+  .content {
+    & .title        { font-size: 1rem; }
+    & .description  { font-size: 0.7rem; }
+    & button        { font-size: 0.7rem; }
+  }
+  .item {
+    width: 160px;
+    height: 270px;
+
+    &:nth-child(3) { left: 50%; }
+    &:nth-child(4) { left: calc(50% + 170px); }
+    &:nth-child(5) { left: calc(50% + 340px); }
+    &:nth-child(6) { left: calc(50% + 510px); opacity: 0; }
+  }
+}
+
+/* Small screens: phones in portrait mode */
+@media (width <= 650px) {
+  .content {
+    width: 80vw;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    & .title        { font-size: 0.9rem; }
+    & .description  { font-size: 0.65rem; }
+    & button        { font-size: 0.65rem; }
+  }
+  .item {
+    width: 130px;
+    height: 220px;
+
+    &:nth-child(3) { left: 50%; }
+    &:nth-child(4) { left: calc(50% + 140px); }
+    &:nth-child(5) { left: calc(50% + 280px); }
+    &:nth-child(6) { left: calc(50% + 420px); opacity: 0; }
+  }
+}
+
+/* Extra-small screens: phones under 480px */
+@media (width <= 480px) {
+  .content {
+    width: 90vw;
+    padding: 1rem;
+    
+    & .title        { font-size: 0.8rem; }
+    & .description  { font-size: 0.6rem; }
+    & button        { font-size: 0.6rem; padding: 0.5rem; }
+  }
+  .item {
+    width: 100px;
+    height: 180px;
+
+    &:nth-child(3) { left: 50%; }
+    &:nth-child(4) { left: calc(50% + 110px); }
+    &:nth-child(5) { left: calc(50% + 220px); }
+    &:nth-child(6) { left: calc(50% + 330px); opacity: 0; }
+  }
+}
+
+
+
+
+
+.pricing-container {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: baseline;
+    flex-wrap: wrap;
+    perspective: 1000px;
+  }
+
+  .pricing-card {
+    width: 380px;
+    padding: 2.5rem;
+    border-radius: 24px;
+    background: linear-gradient(145deg, 
+      rgba(28, 35, 65, 0.7) 0%,
+      rgba(24, 27, 44, 0.7) 100%);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(103, 132, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    transform-style: preserve-3d;
+  }
+
+  .pricing-card:hover {
+    transform: translateY(-10px);
+    border: 1px solid rgba(103, 132, 255, 0.3);
+    box-shadow: 
+      0 0 20px rgba(103, 132, 255, 0.1),
+      0 0 40px rgba(103, 132, 255, 0.1);
+  }
+
+  .inner-glow {
+    position: absolute;
+    inset: 0;
+    border-radius: 24px;
+    background: radial-gradient(
+      circle at 50% 50%,
+      rgba(103, 132, 255, 0.15) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
+  }
+
+  .plan-icon {
+    background: linear-gradient(135deg, rgba(103, 132, 255, 0.2), rgba(103, 132, 255, 0.1));
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .plan-icon::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    animation: shine 2s infinite;
+  }
+
+  @keyframes shine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  .plan-name {
+    color: #fff;
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(90deg, #fff, #6784ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .price {
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 1.5rem 0;
+    color: #fff;
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  .price span {
+    font-size: 1rem;
+    opacity: 0.8;
+    font-weight: 400;
+  }
+
+  .features {
+    list-style: none;
+    margin: 2rem 0;
+  }
+
+  .features li {
+    margin: 1rem 0;
+    opacity: 0.9;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.1rem;
+  }
+
+  .features li::before {
+    content: "⚡";
+    color: #6784ff;
+    font-size: 0.9rem;
+  }
+
+  .cta-button {
+    width: 100%;
+    padding: 1.25rem;
+    border: none;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #6784ff, #4462ff);
+    color: white;
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-button::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(103, 132, 255, 0.3);
+  }
+
+  .cta-button:hover::after {
+    transform: translateX(100%);
+  }
+
+  .comparison {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.975rem;
+    margin-top: 1rem;
+    text-align: center;
+  }
+
+  .highlight {
+    position: absolute;
+    top: 1rem;
+    right: -4rem;
+    background: linear-gradient(135deg, #6784ff, #4462ff);
+    color: white;
+    padding: 0.5rem 4rem;
+    transform: rotate(45deg);
+    font-size: 0.875rem;
+    font-weight: 500;
+    box-shadow: 0 2px 10px rgba(103, 132, 255, 0.3);
+  }
+
+  .card-blur {
+    position: absolute;
+    bottom: 10px;
+    inset: 0;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: -1;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+  }
+
+  .popular {
+    animation: float 4s ease-in-out infinite;
+  }
+
+  @media (max-width: 768px) {
+    .pricing-container {
+      padding: 1rem;
+    }
+    
+    .pricing-card {
+      width: 100%;
+      max-width: 380px;
+    }
+  }
+
+
+  .containerr {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  min-height: 100vh;
+}
+
+.boxx {
+  width: 100%;
+  max-width: 200px;
+  height: 300px;
+  margin: 15px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  transition: 0.3s ease-in-out;
+
+  &:hover {
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+
+    .card-footer {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .imgBx {
+      transform: scale(1.3);
+    }
+  }
+
+  .imgBx {
+    transition: 0.3s ease-in-out;
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+
+  .card-footer {
+    font-size: 12px;
+    position: absolute;
+    bottom: 0;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(100%);
+    transition: 0.3s ease-in-out;
+    width: 100%;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    
+    h3 {
+      padding: 2.5px 0;
+    }
+  }
+}
+
+  
+
+
+
+.row{
+    display: flex;
+    justify-content: space-between;
+}
+.footer-cta {
+  border-bottom: 1px solid #373636;
+  margin-bottom: 20px;
+}
+.single-cta i {
+  color: #ff5e14;
+  font-size: 30px;
+  float: left;
+  margin-top: 8px;
+}
+.cta-text {
+  padding-left: 15px;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+.cta-text h4 {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.cta-text span {
+  color: #757575;
+  font-size: 15px;
+}
+.footer-content {
+  position: relative;
+  z-index: 2;
+}
+.footer-pattern img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 330px;
+  background-size: cover;
+  background-position: 100% 100%;
+}
+.footer-logo {
+  margin-bottom: 30px;
+}
+.footer-logo img {
+    max-width: 200px;
+}
+.footer-text p {
+  margin-bottom: 14px;
+  font-size: 14px;
+      color: #7e7e7e;
+  line-height: 28px;
+}
+.footer-social-icon span {
+  color: #fff;
+  display: block;
+  font-size: 20px;
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
+  margin-bottom: 20px;
+}
+.footer-social-icon a {
+  color: #fff;
+  font-size: 16px;
+  margin-right: 15px;
+}
+.footer-social-icon i {
+  height: 40px;
+  width: 40px;
+  text-align: center;
+  line-height: 38px;
+  border-radius: 50%;
+}
+.facebook-bg{
+  background: #3B5998;
+}
+.twitter-bg{
+  background: #55ACEE;
+}
+.google-bg{
+  background: #DD4B39;
+}
+.footer-widget-heading h3 {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 40px;
+  position: relative;
+}
+.footer-widget-heading h3::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -15px;
+  height: 2px;
+  width: 50px;
+  background: #ff5e14;
+}
+.footer-widget ul li {
+  display: inline-block;
+  float: left;
+  width: 50%;
+  margin-bottom: 12px;
+}
+.footer-widget ul li a:hover{
+  color: #ff5e14;
+}
+.footer-widget ul li a {
+  color: #878787;
+  text-transform: capitalize;
+}
+.subscribe-form {
+  position: relative;
+  overflow: hidden;
+}
+.subscribe-form input {
+  width: 100%;
+  padding: 14px 28px;
+  background: #2E2E2E;
+  border: 1px solid #2E2E2E;
+  color: #fff;
+}
+.subscribe-form button {
+    position: absolute;
+    right: 0;
+    background: #ff5e14;
+    padding: 13px 20px;
+    border: 1px solid #ff5e14;
+    top: 0;
+}
+.subscribe-form button i {
+  color: #fff;
+  font-size: 22px;
+  transform: rotate(-6deg);
+}
+.copyright-area{
+  
+  padding: 25px 0;
+}
+.copyright-text p {
+  margin: 0;
+  font-size: 14px;
+  color: #878787;
+}
+.copyright-text p a{
+  color: #ff5e14;
+}
+.footer-menu li {
+  display: inline-block;
+  margin-left: 20px;
+}
+.footer-menu li:hover a{
+  color: #ff5e14;
+}
+.footer-menu li a {
+  font-size: 14px;
+  color: #878787;
+}
+
+/* CSS for the "Book Now" Button */
+.book-now-container {
+    position: relative;
+    z-index: 8;
+    top:160px;
+    right: 500px;
+    
+}
+
+.book-now-button {
+    padding: 10px 20px;
+    background-color: #ff6b6b; /* Button color */
+    color: #fff;
+    font-size: 1em;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    z-index: 9; /* Keeps button above other elements */
+}
+
+.book-now-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <script>
+        function toggleMenu() {
+            const navSection = document.querySelector('.nav-section');
+            navSection.classList.toggle('show');
+        }
+    </script>
+</head>
+<body>
+    <div class="nav-bar">
+        <div class="nav-section ">
+            <a href="#">Venue</a>
+            <a href="#">Events</a>
+            <a href="#">Gallery</a>
+            <a href="#">Dress Code</a>
+
+        </div>
+        
+        <img src="/image/download (22).png" class="image" alt="Logo">
+        <div class="hamburger" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="nav-section">
+            <a href="#">Restaurant</a>
+            <a href="#">Membership</a>
+            <a href="#">Contact</a>
+            <a href="/auth/">Login</a>
+        </div>
+    </div>
+    <br>
+    <div class="container">
+        <div class="top-slider">
+            <div class="slides">
+                <div class="slide welcome-slide" id="s-1">
+                <div class="book-now-container">
+                  <button class="book-now-button">Book Now</button>
+                </div>
+                </div>
+                <div class="slide rewards-slide"id="s-2">
+                  <div class="book-now-container">
+                    <button class="book-now-button">Book Now</button>
+                  </div>
+                </div>
+                <div class="slide rewards-slide"id="s-3">
+                  <div class="book-now-container">
+                    <button class="book-now-button">Book Now</button>
+                  </div>
+                </div>
+                <div class="slide affiliate-slide"id="s-4">
+                  <div class="book-now-container">
+                    <button class="book-now-button">Book Now</button>
+                  </div>
+                </div>
+            </div>
+            <button class="slider-arrow left" aria-label="Previous slide">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="slider-arrow right" aria-label="Next slide">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            <div class="slider-nav"></div>
+        </div>
+    </div>
+    
+
+    <div class="container">
+        <div class="restaurant-container">
+        <div class="label-container">
+         
+        </div>
+        <div class="card-slider">
+          <div class="restaurant-card">
+              <div class="image-container">
+                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiCqxW8ovRxaz7b4xBy4wxbkCLqKrty13MaA&s" alt="">
+              </div>
+          </div>
+          <div class="restaurant-card">
+              <div class="image-container">
+                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFO_wisQ-pwky5tPTsTUIHuUjFMf_3e3G_nQ&s" alt="">
+              </div>
+          </div>
+          <div class="restaurant-card">
+              <div class="image-container">
+                  <img src="https://floodlightz.com/wp-content/uploads/2024/08/Dj-Emily.jpg" alt="">
+              </div>
+          </div>
+          <div class="restaurant-card">
+              <div class="image-container">
+                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgnwpkx-KyaTkw1ehCRrRcynkWulmxrHgD2w&s" alt="">
+              </div>
+          </div>
+          <div class="restaurant-card">
+              <div class="image-container">
+                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeHzN_b3waDhujnkwhAvAGGKDfX7fananC_Q&s" alt="">
+              </div>
+          </div>
+          <div class="restaurant-card">
+              <div class="image-container">
+                  <img src="https://5.imimg.com/data5/SELLER/Default/2021/10/DE/BP/GA/62631245/d-j-event-organizer.jpg1" alt="">
+              </div>
+          </div>
+        </div>
+      </div>
+
+    
+      <br><br>
+      <main>
+        <ul class='slider'>
+          <li class='item' style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSdt8QJ9l6SewBqU9u7QZTtI_UQ0GG6Gd5_g&s')">
+            <div class='content'>
+              <h2 class='title'>"A2 Restaurant"</h2>
+              <p class='description'> Lorem ipsum, dolor sit amet consectetur
+              adipisicing elit. Tempore fuga voluptatum, iure corporis inventore
+              praesentium nisi. Id laboriosam ipsam enim.  </p>
+              <button>Read More</button>
+            </div>
+          </li>
+          <li class='item' style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyzs8VJ24QOepw8tXmz9_jjDlUiXv5EDrXZQ&s')">
+            <div class='content'>
+              <h2 class='title'>"A2 Dj-Night"</h2>
+              <p class='description'> Lorem ipsum, dolor sit amet consectetur
+              adipisicing elit. Tempore fuga voluptatum, iure corporis inventore
+              praesentium nisi. Id laboriosam ipsam enim.  </p>
+              <button>Read More</button>
+            </div>
+          </li>
+          <li class='item' style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhoonHXPdKO23E49X2OmGybAr4y3c0wl165g&s')">
+            <div class='content'>
+              <h2 class='title'>"A2 fashion show"</h2>
+              <p class='description'> Lorem ipsum, dolor sit amet consectetur
+              adipisicing elit. Tempore fuga voluptatum, iure corporis inventore
+              praesentium nisi. Id laboriosam ipsam enim.  </p>
+              <button>Read More</button>
+            </div>
+          </li>
+          <li class='item' style="background-image: url('https://djor3ri07nw7w.cloudfront.net/wp-content/uploads/2024/09/25122350/MMB-Socials-16.9-On-Sale-Now-1024x576.jpg')">
+            <div class='content'>
+              <h2 class='title'>"A2 Yearly MemberShip"</h2>
+              <p class='description'>
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fuga voluptatum, iure corporis inventore praesentium nisi. Id laboriosam ipsam enim.
+              </p>
+              <button>Read More</button>
+            </div>
+          </li>
+          <li class='item' style="background-image: url('https://theawesomer.com/photos/2017/07/simon_stalenhag_the_electric_state_6.jpg')">
+            <div class='content'>
+              <h2 class='title'>"Urban Decay"</h2>
+              <p class='description'>
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fuga voluptatum, iure corporis inventore praesentium nisi. Id laboriosam ipsam enim.
+              </p>
+              <button>Read More</button>
+            </div>
+          </li>
+          <li class='item' style="background-image: url('https://da.se/app/uploads/2015/09/simon-december1994.jpg')">
+            <div class='content'>
+              <h2 class='title'>"The Migration"</h2>
+              <p class='description'> Lorem ipsum, dolor sit amet consectetur
+              adipisicing elit. Tempore fuga voluptatum, iure corporis inventore
+              praesentium nisi. Id laboriosam ipsam enim.  </p>
+              <button>Read More</button>
+            </div>
+          </li>
+        </ul>
+        <nav class='nav'>
+          <ion-icon class='btn prev' name="arrow-back-outline"></ion-icon>
+          <ion-icon class='btn next' name="arrow-forward-outline"></ion-icon>
+        </nav>
+      </main>
+      
+      <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+      <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+
+<br><br>
+      <div class="pricing-container">
+        <!-- Basic Plan -->
+        <div class="pricing-card">
+          <div class="inner-glow"></div>
+          <div class="card-blur"></div>
+          <div class="plan-icon">🚀</div>
+          <h2 class="plan-name">Entry Charge</h2>
+          <h1 >Rs 1500 / head</h1>
+          <br>
+          <button class="cta-button">Join Now</button>
+        </div>
+    
+        <!-- Pro Plan -->
+        <div class="pricing-card popular">
+          <div class="inner-glow"></div>
+          <div class="card-blur"></div>
+          <div class="highlight">POPULAR</div>
+          <div class="plan-icon">⚡</div>
+          <h2 class="plan-name">Anual Membership</h2>
+          <br>
+         <h1>Rs 25000 / head</h1>
+         <br>
+          <button class="cta-button">Join Now</button>
+        </div>
+
+         <!-- Enterprise Plan -->
+      <div class="pricing-card">
+        <div class="inner-glow"></div>
+        <div class="card-blur"></div>
+        <div class="plan-icon">🏢</div>
+        <h2 class="plan-name">Enterprise</h2>
+       <h1>Rs 2500 / head</h1>
+       <br>
+        <button class="cta-button">Join Now</button>
+      </div>
+    </div>
+
+    <h1 class="teams">Our Team Member</h1>
+    <div class="containerr">
+        <div class="boxx">
+          <div class="imgBx">
+            <img src="https://i.ibb.co/x1Gth6s/team-1.jpg" alt="">
+          </div>
+          <div class="card-footer">
+            <h3>Lorem Ipusem</h3>
+            <h3>Senior Front-end Developer</h3>
+          </div>
+        </div>
+        
+        <div class="boxx">
+          <div class="imgBx">
+            <img src="https://i.ibb.co/VNnNB0P/team-2.jpg" alt="">
+          </div>
+          <div class="card-footer">
+            <h3>Lorem Ipusem</h3>
+            <h3>Senior Front-end Developer</h3>
+          </div>
+        </div>
+        
+        <div class="boxx">
+          <div class="imgBx">
+            <img src="https://i.ibb.co/2MP418L/team-3.jpg" alt="">
+          </div>
+          <div class="card-footer">
+            <h3>Lorem Ipusem</h3>
+            <h3>Senior Front-end Developer</h3>
+          </div>
+        </div>
+        
+        <div class="boxx">
+          <div class="imgBx">
+            <img src="https://i.ibb.co/jGcmRHP/team-4.jpg" alt="">
+          </div>
+          <div class="card-footer">
+            <h3>Lorem Ipusem</h3>
+            <h3>Senior Front-end Developer</h3>
+          </div>
+        </div>
+        
+      </div>
+    
+
+
+
+      <footer class="footer-section">
+        <div class="container">
+            <div class="footer-cta pt-5 pb-5">
+                <div class="row">
+                    <div class="col-xl-4 col-md-4 mb-30">
+                        <div class="single-cta">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div class="cta-text">
+                                <h4>Find us</h4>
+                                <span>IIT Patna</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-md-4 mb-30">
+                        <div class="single-cta">
+                            <i class="fas fa-phone"></i>
+                            <div class="cta-text">
+                                <h4>Call us</h4>
+                                <span>620108865</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-md-4 mb-30">
+                        <div class="single-cta">
+                            <i class="far fa-envelope-open"></i>
+                            <div class="cta-text">
+                                <h4>Mail us</h4>
+                                <span>a2events@gmail.com</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-content pt-5 pb-5">
+                <div class="row">
+                    <div class="col-xl-4 col-lg-4 mb-50">
+                        <div class="footer-widget">
+                            <div class="footer-logo">
+                                <a href="index.html"><img src="https://i.ibb.co/QDy827D/ak-logo.png" class="img-fluid" alt="logo"></a>
+                            </div>
+                            <div class="footer-text">
+                                <p>Lorem ipsum dolor sit amet, consec tetur adipisicing elit, sed do eiusmod tempor incididuntut consec tetur adipisicing
+                                elit,Lorem ipsum dolor sit amet.</p>
+                            </div>
+                            <div class="footer-social-icon">
+                                <span>Follow us</span>
+                                <a href="#"><i class="fab fa-facebook-f facebook-bg"></i></a>
+                                <a href="#"><i class="fab fa-twitter twitter-bg"></i></a>
+                                <a href="#"><i class="fab fa-google-plus-g google-bg"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-6 mb-30">
+                        <div class="footer-widget">
+                            <div class="footer-widget-heading">
+                                <h3>Useful Links</h3>
+                            </div>
+                            <ul>
+                                <li><a href="#">Home</a></li>
+                                <li><a href="#">about</a></li>
+                                <li><a href="#">services</a></li>
+                                <li><a href="#">portfolio</a></li>
+                                <li><a href="#">Contact</a></li>
+                                <li><a href="#">About us</a></li>
+                                <li><a href="#">Our Services</a></li>
+                                <li><a href="#">Expert Team</a></li>
+                                <li><a href="#">Contact us</a></li>
+                                <li><a href="#">Latest News</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-6 mb-50">
+                        <div class="footer-widget">
+                            <div class="footer-widget-heading">
+                                <h3>Subscribe</h3>
+                            </div>
+                            <div class="footer-text mb-25">
+                                <p>Don’t miss to subscribe to our new feeds, kindly fill the form below.</p>
+                            </div>
+                            <div class="subscribe-form">
+                                <form action="#">
+                                    <input type="text" placeholder="Email Address">
+                                    <button><i class="fab fa-telegram-plane"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 text-center text-lg-left">
+                        <div class="copyright-text">
+                            <p>Copyright &copy; 2018, All Right Reserved <a href="https://codepen.io/anupkumar92/">Anup</a></p>
+                        </div>
+                    </div>
+                  
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script >
+        document.addEventListener('DOMContentLoaded', () => {
+    const slides = document.querySelector('.slides');
+    const sliderNav = document.querySelector('.slider-nav');
+    const leftArrow = document.querySelector('.slider-arrow.left');
+    const rightArrow = document.querySelector('.slider-arrow.right');
+    const totalSlides = document.querySelectorAll('.slide').length;
+    let currentSlide = 0;
+
+    for (let i = 0; i < totalSlides; i++) {
+        const dot = document.createElement('span');
+        dot.classList.add('slider-dot');
+        if (i === 0) dot.classList.add('active');
+        sliderNav.appendChild(dot);
+    }
+
+    const dots = document.querySelectorAll('.slider-dot');
+
+    function showSlide(index) {
+        slides.style.transform = `translateX(-${index * 100}%)`;
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === index);
+        });
+    }
+
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        showSlide(currentSlide);
+    }
+
+    function prevSlide() {
+        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+        showSlide(currentSlide);
+    }
+
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            currentSlide = index;
+            showSlide(currentSlide);
+        });
+    });
+
+    leftArrow.addEventListener('click', prevSlide);
+    rightArrow.addEventListener('click', nextSlide);
+
+    let startX, moveX;
+    let isDragging = false;
+
+    slides.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].pageX;
+        isDragging = true;
+    });
+
+    slides.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        moveX = e.touches[0].pageX;
+        const diff = moveX - startX;
+        slides.style.transform = `translateX(calc(-${currentSlide * 100}% + ${diff}px))`;
+    });
+
+    slides.addEventListener('touchend', (e) => {
+        isDragging = false;
+        const diff = moveX - startX;
+        if (Math.abs(diff) > 100) {
+            if (diff > 0) prevSlide();
+            else nextSlide();
+        } else {
+            showSlide(currentSlide);
+        }
+    });
+
+    slides.addEventListener('mousedown', (e) => {
+        startX = e.pageX;
+        isDragging = true;
+    });
+
+    slides.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        moveX = e.pageX;
+        const diff = moveX - startX;
+        slides.style.transform = `translateX(calc(-${currentSlide * 100}% + ${diff}px))`;
+    });
+
+    slides.addEventListener('mouseup', () => {
+        isDragging = false;
+        const diff = moveX - startX;
+        if (Math.abs(diff) > 100) {
+            if (diff > 0) prevSlide();
+            else nextSlide();
+        } else {
+            showSlide(currentSlide);
+        }
+    });
+
+    slides.addEventListener('mouseleave', () => {
+        if (isDragging) {
+            isDragging = false;
+            showSlide(currentSlide);
+        }
+    });
+  
+    let autoSlideInterval = setInterval(nextSlide, 6000);
+
+    slides.addEventListener('mouseenter', () => {
+        clearInterval(autoSlideInterval);
+    });
+
+    slides.addEventListener('mouseleave', () => {
+        autoSlideInterval = setInterval(nextSlide, 6000);
+    });
+
+    const options = document.querySelectorAll('.option');
+    options.forEach(option => {
+        option.addEventListener('mouseenter', () => {
+            option.style.transform = 'translateY(-10px) scale(1.05)';
+        });
+        option.addEventListener('mouseleave', () => {
+            option.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const restaurantContainer = document.querySelector(".card-slider");
+    const leftRButton = document.querySelector(".restaurant-arrow-left");
+    const rightRButton = document.querySelector(".restaurant-arrow-right");
+  
+    function updateButtonState() {
+      leftRButton.disabled = restaurantContainer.scrollLeft <= 0;
+      rightRButton.disabled =
+        restaurantContainer.scrollLeft + restaurantContainer.offsetWidth >=
+        restaurantContainer.scrollWidth;
+    }
+  
+    leftRButton.onclick = function () {
+      restaurantContainer.scrollBy({
+        left: -restaurantContainer.offsetWidth / 2,
+        behavior: "smooth",
+      });
+    };
+  
+    rightRButton.onclick = function () {
+      restaurantContainer.scrollBy({
+        left: restaurantContainer.offsetWidth / 2,
+        behavior: "smooth",
+      });
+    };
+  
+    restaurantContainer.addEventListener("scroll", updateButtonState);
+    updateButtonState();
+  });
+
+
+const slider = document.querySelector(".slider");
+
+function activate(e) {
+  const items = document.querySelectorAll(".item");
+  e.target.matches(".next") && slider.append(items[0]);
+  e.target.matches(".prev") && slider.prepend(items[items.length - 1]);
+}
+
+document.addEventListener("click", activate, false);
+
+    </script>
+</body>
+</html>
