@@ -13,29 +13,43 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #71b7e6, #9b59b6);
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #282c34, #3a3f47);
+            color: #fff;
             height: 100vh;
+            overflow: hidden;
+            text-align: center;
         }
 
-        /* Form Container */
+        /* Title */
+        h1 {
+            font-size: 2.5rem;
+            color: #ffcc29;
+            margin-top: 20px;
+            font-weight: 700;
+        }
+
+        /* Form Card */
         .form-container {
-            background: white;
+            display: none;
+            background: rgba(0, 0, 0, 0.7);
             border-radius: 10px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
             padding: 30px;
-            width: 300px;
+            width: 350px;
+            margin: 30px auto;
             text-align: center;
             animation: fadeIn 1.5s ease-in-out;
         }
 
-        /* Form Fields */
+        .form-container.active {
+            display: block;
+        }
+
         .form-container h2 {
-            margin-bottom: 20px;
-            color: #333;
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #ffcc29;
         }
 
         .form-container input[type="text"],
@@ -43,60 +57,87 @@
         .form-container input[type="file"] {
             width: 100%;
             padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            outline: none;
-            transition: border-color 0.3s;
+            margin: 12px 0;
+            border: 1px solid #fff;
+            border-radius: 4px;
+            background: transparent;
+            color: #fff;
+            font-size: 1rem;
         }
 
         .form-container input[type="text"]:focus,
         .form-container input[type="number"]:focus,
         .form-container input[type="file"]:focus {
-            border-color: #9b59b6;
+            border-color: #ffcc29;
         }
 
-        /* Submit Button */
         .form-container button {
-            width: 100%;
-            padding: 10px;
-            background: #9b59b6;
-            color: white;
+            background: #ffcc29;
+            color: #282c34;
             border: none;
-            border-radius: 5px;
+            padding: 12px 20px;
+            border-radius: 4px;
+            font-size: 1rem;
             cursor: pointer;
-            transition: background 0.3s, transform 0.3s;
+            transition: background 0.3s ease, transform 0.3s;
+            width: 100%;
         }
 
         .form-container button:hover {
-            background: #7d3cb5;
+            background: #ff9800;
             transform: translateY(-3px);
         }
 
-        /* Animation */
+        /* Gradient Divider */
+        .divider {
+            width: 100%;
+            height: 3px;
+            margin: 20px 0;
+            background: linear-gradient(90deg, #ffcc29, #ff9800);
+        }
+
+        /* Fade Animation */
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(-20px);
+                transform: translateY(-30px);
             }
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .form-container {
+                width: 100%;
+                padding: 20px;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="form-container">
-        <h2>Add Event</h2>
-        <form action="/admin/event/add" method="post" enctype="multipart/form-data">
-            <input type="text" placeholder="Event Name"name="name" required>
-            <input type="number" placeholder="Number of Persons in Each Team"name="teamMemberLimit" required>
-            <input type="number" placeholder="Prize Money"name="prizeMoney" required>
-            <input type="number" placeholder="Age Up To"name="ageLimit" required>
+
+    <h1>Add Item</h1>
+
+    <!-- Form for Adding Event -->
+    <div class="form-container active" id="add-event-form">
+        <h2>Item Details</h2>
+        <form action="/admin/event/add" method="POST" enctype="multipart/form-data">
+            <input type="text" name="name" placeholder=" Name" required>
+            <input type="number" name="prizeMoney" placeholder="Price" required>
             <input type="file" name="eventLogo" required>
+            <div class="divider"></div>
             <button type="submit">Submit</button>
         </form>
     </div>
+
+    
+
 </body>
 </html>

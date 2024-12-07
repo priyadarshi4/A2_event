@@ -10,6 +10,8 @@ const authRouter = require("./router/auth")
 const frontRouter = require("./router/front")
 const musicRouter = require("./router/music")
 const adminRouter = require("./router/admin")
+const contactRouter = require("./router/contact")
+const mambershipRouter = require("./router/mambership")
 
 
 
@@ -39,7 +41,8 @@ app.use("/auth",authRouter)
 app.use("/front",frontRouter)
 app.use("/music",musicRouter)
 app.use("/admin",adminRouter)
-
+app.use("/contact",contactRouter)
+app.use("/mambership",mambershipRouter)
 
 
 

@@ -13,86 +13,99 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #71b7e6, #9b59b6);
+            font-family: 'Roboto', sans-serif;
+            background: #121212;
+            color: #fff;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
         }
 
-        /* Form Container */
+        /* Login Container */
         .login-container {
-            background: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            width: 300px;
+            background: #333;
+            padding: 40px 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            width: 400px;
             text-align: center;
-            animation: fadeIn 1.5s ease-in-out;
         }
 
-        /* Form Fields */
         .login-container h2 {
+            font-size: 2.5rem;
+            color: #f5a623;
             margin-bottom: 20px;
-            color: #333;
         }
 
-        .login-container input[type="email"],
-        .login-container input[type="password"] {
+        .login-container input {
             width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            border: none;
+            border-radius: 10px;
+            background: #444;
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        .login-container input:focus {
             outline: none;
-            transition: border-color 0.3s;
+            background: #555;
         }
 
-        .login-container input[type="email"]:focus,
-        .login-container input[type="password"]:focus {
-            border-color: #9b59b6;
-        }
-
-        /* Buttons */
         .login-container button {
             width: 100%;
-            padding: 10px;
-            background: #9b59b6;
-            color: #fff;
+            padding: 15px;
+            background: #f5a623;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 1.2rem;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: background 0.3s ease, transform 0.2s ease;
         }
 
         .login-container button:hover {
-            background: #7d3cb5;
+            background: #ff7f00;
+            transform: scale(1.05);
         }
 
-        /* Forgot Password Link */
         .login-container .forgot-password {
             display: block;
             margin-top: 15px;
-            color: #9b59b6;
+            color: #f5a623;
             text-decoration: none;
-            transition: color 0.3s;
+            font-size: 1rem;
+            transition: color 0.3s ease;
         }
 
         .login-container .forgot-password:hover {
-            color: #7d3cb5;
+            color: #ff7f00;
         }
 
-        /* Animation */
+        /* Gradient Divider */
+        .divider {
+            width: 100%;
+            height: 3px;
+            margin: 20px 0;
+            background: linear-gradient(90deg, #f5a623, #ff7f00);
+        }
+
+        /* Fade Animation */
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(-20px);
+                transform: translateY(-30px);
             }
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
+        }
+
+        .login-container {
+            animation: fadeIn 1.5s ease-in-out;
         }
     </style>
 </head>
@@ -100,8 +113,9 @@
     <div class="login-container">
         <h2>Login</h2>
         <form action="/admin/login" method="post">
-            <input type="email"name="email" placeholder="Email" required>
-            <input type="password"name="password" placeholder="Password" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <div class="divider"></div>
             <button type="submit">Login</button>
             <a href="#" class="forgot-password">Forgot Password?</a>
         </form>

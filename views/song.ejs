@@ -24,7 +24,7 @@
         h1, h2 {
             font-family: 'Playfair Display', serif;
             font-weight: 600;
-            color:white;
+            color: #f5a623;
         }
 
         h2 {
@@ -176,22 +176,7 @@
             background-color: #ff7f00;
         }
 
-        /* Music Player */
-        .music-player {
-            display: none; /* Initially hidden */
-            width: 100%;
-            background-color: #222;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 30px;
-            text-align: center;
-        }
-
-        .music-player audio {
-            width: 100%;
-            margin-top: 10px;
-        }
-
+        /* Footer */
         footer {
             background: #333;
             color: #f5f5f5;
@@ -243,14 +228,6 @@
         </div>
     </div>
 
-    <!-- Music Player Section -->
-    <div id="musicPlayer" class="music-player">
-        <h3 id="songTitle">Now Playing</h3>
-        <audio id="audioPlayer" controls>
-            <source id="audioSource" src="" type="audio/mpeg">
-        </audio>
-    </div>
-
     <!-- Footer Section -->
     <footer>
         <p>© 2024 Hindi Music | All Rights Reserved</p>
@@ -259,17 +236,8 @@
     <script>
         // Function to play the song
         function playSong(audioSrc) {
-            const player = document.getElementById('musicPlayer');
-            const audioSource = document.getElementById('audioSource');
-            const audioPlayer = document.getElementById('audioPlayer');
-            const songTitle = document.getElementById('songTitle');
-            
-            // Show the player and update song details
-            player.style.display = 'block';
-            audioSource.src = audioSrc;
-            songTitle.textContent = "Now Playing: " + audioSrc.split('/').pop().replace('.mp3', '').replace(/_/g, ' '); // Using song title
-            audioPlayer.load();  // Reload audio player with new source
-            audioPlayer.play();  // Play the song
+            const audioPlayer = new Audio(audioSrc);
+            audioPlayer.play();
         }
 
         // Function to scroll to the song section

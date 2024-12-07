@@ -6,7 +6,8 @@ const jwt = require("jsonwebtoken");
 const {validateAdmin , userIsLoggedIn} = require("../middleware/adminValidate");
 const {eventModel,validateeventModel} = require("../models/event")
 const upload = require("../configuration/multerConnection");
-const { noticeModel, validateNoticeModel } = require("../models/notice");
+const songModel= require("../models/song");
+const Artist = require('../models/artist');
 
 router.get("/create",async(req,res)=>{
 
@@ -58,7 +59,7 @@ router.get("/event",validateAdmin,(req,res)=>{
 
 router.post("/event/add", validateAdmin,upload.single("eventLogo"),async (req, res) => {
     try {
-        let { name, teamMemberLimit, prizeMoney, ageLimit,eventLogo } = req.body; // Ensure eventLogo is included in your form
+        let { name, prizeMoney,eventLogo } = req.body; // Ensure eventLogo is included in your form
 
         // Check if the event already exists
         let event = await eventModel.findOne({ name });
@@ -67,9 +68,7 @@ router.post("/event/add", validateAdmin,upload.single("eventLogo"),async (req, r
         // Create new event
         event = await eventModel.create({
             name,
-            teamMemberLimit,
             prizeMoney,
-            ageLimit,
             eventLogo:req.file.buffer// This might be undefined unless you include it in the form
         });
         res.render("addSucess")
@@ -97,35 +96,94 @@ router.get("/delete/:id",validateAdmin,async(req,res)=>{
  
 })
 
-router.get("/notice",validateAdmin,(req,res)=>{
-    res.render("addNotice")
-})
 
-router.post("/notice/add",validateAdmin,async(req,res)=>{
-    let {notice} = req.body;
+router.get('/addartist', (req, res) => {
+    res.render('addartist');  // Render the 'addartist' view for adding an artist
+});
 
-    let addnotice = await noticeModel.findOne({notice})
-    if(addnotice) return res.send("notice allready created")
+// Route to handle adding a new artist
+router.post('/addartist', async (req, res) => {
+    const { name, image } = req.body;
 
-    addnotice = await noticeModel.create({
-        notice,
-        date:Date.now()
-    })
-    console.log(addnotice)
-    res.redirect("/admin/notice/show")
-})
+    if (!name || !image) {
+        return res.status(400).send("Name and Image are required.");
+    }
 
-router.get("/notice/show",async(req,res)=>{
-    let notices = await noticeModel.find()
-    res.render("notice",{notices})
-})
+    try {
+        const newArtist = new Artist({ name, image });
+        await newArtist.save();  // Save the artist to the database
+        res.redirect('/admin/addsong');  // Redirect to add song page
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send("Error adding artist");
+    }
+});
 
-router.get("/delete/notice/:id",validateAdmin,async(req,res)=>{
-    let event = await noticeModel.findOneAndDelete({_id:req.params.id})
-     return res.redirect("/admin/notice/show")
- 
-})
+// Route to display all artists (for selecting when adding a song)
+router.get('/artists', async (req, res) => {
+    try {
+        const artists = await Artist.find();  // Fetch all artists
+        res.render('song', { artists });
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send("Error fetching artists");
+    }
+});
 
+
+
+
+router.get('/addsong', async (req, res) => {
+    try {
+        const artists = await Artist.find();  // Fetch all artists
+        res.render('addsong', { artists });   // Render the 'addsong' view with artist data
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send("Error fetching artists for the song form");
+    }
+});
+
+// Route to handle adding a new song
+router.post('/addsong', async (req, res) => {
+    const { title, artist, audio, icon } = req.body;
+
+    if (!title || !artist || !audio || !icon) {
+        return res.status(400).send("All fields are required.");
+    }
+
+    try {
+        const newSong = await songModel.create({
+            title,
+            artist,  // artist is an ObjectId linked to the Artist model
+            audio,
+            icon
+        });
+
+        await newSong.save();  // Save to MongoDB
+        res.redirect('/admin/addsong');  // Redirect to the list of songs (or wherever you want)
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send("Error adding song");
+    }
+});
+
+
+// Route to render the page with both artists and songs
+router.get('/artistssongs', async (req, res) => {
+    try {
+        // Fetch all artists
+        const artists = await Artist.find();  
+
+        // Fetch all songs (or you can filter by artist if necessary)
+        const songs = await songModel.find(); 
+
+        // Render the 'artists-songs' view and pass both artists and songs
+        res.render('song', { artists, songs });
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send("Error fetching artists and songs");
+    }
+});
 
 
 

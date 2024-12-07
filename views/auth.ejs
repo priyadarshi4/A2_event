@@ -4,36 +4,155 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login & Registration</title>
-    <link rel="stylesheet" href="/style/auth.css">
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #282c34, #3a3f47);
+            color: #fff;
+            height: 100vh;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        /* Title */
+        h1 {
+            font-size: 2.5rem;
+            color: #ffcc29;
+            margin-top: 20px;
+            font-weight: 700;
+        }
+
+        /* Form Card */
+        .form-card {
+            display: none;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            text-align: center;
+            width: 350px;
+            margin: 30px auto; /* Centers the form card horizontally */
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        .form-card.active {
+            display: block;
+        }
+
+        .form-card h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #ffcc29;
+        }
+
+        .form-card input {
+            width: 100%;
+            padding: 10px;
+            margin: 12px 0;
+            border: 1px solid #fff;
+            border-radius: 4px;
+            background: transparent;
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        .form-card button {
+            background: #ffcc29;
+            color: #282c34;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            width: 100%;
+        }
+
+        .form-card button:hover {
+            background: #ff9800;
+        }
+
+        .toggle-link {
+            font-size: 1rem;
+            color: #fff;
+            margin-top: 15px;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .toggle-link:hover {
+            color: #ffcc29;
+        }
+
+        /* Gradient Divider */
+        .divider {
+            width: 100%;
+            height: 3px;
+            margin: 20px 0;
+            background: linear-gradient(90deg, #ffcc29, #ff9800);
+        }
+
+        /* Fade Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .form-card {
+                width: 100%;
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome</h1>
-    <div class="form-container">
-        <!-- Login Form -->
-        <div class="form-card active" id="login-form">
-            <h2>Login</h2>
-            <form action="/auth/login" method="POST">
-                <input type="email" name="email" placeholder="Email" required>
-                <input type="password" name="password" placeholder="Password" required>
-                <button type="submit">Login</button>
-            </form>
+
+    <h1>Welcome to A2_Event</h1>
+
+    <!-- Login Form -->
+    <div class="form-card active" id="login-form">
+        <h2>Login</h2>
+        <form action="/auth/login" method="POST">
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <div class="divider"></div>
+            <button type="submit">Login</button>
             <div class="toggle-link" onclick="toggleForms()">Don't have an account? Register here.</div>
-        </div>
+        </form>
+    </div>
 
-        <!-- Registration Form -->
-        <div class="form-card" id="register-form">
-            <h2>Register</h2>
-            <form action="/auth/register" method="POST" enctype="multipart/form-data">
-                <input type="text" name="name" placeholder="Name" required>
-                <input type="email" name="email" placeholder="Email" required>
-                <input type="file" name="image" placeholder="profile-pic" required>
-
-                <input type="text" name="collage" placeholder="Bio" required>
-                <input type="password" name="password" placeholder="Password" required>
-                <button type="submit">Register</button>
-            </form>
+    <!-- Registration Form -->
+    <div class="form-card" id="register-form">
+        <h2>Register</h2>
+        <form action="/auth/register" method="POST" enctype="multipart/form-data">
+            <input type="text" name="name" placeholder="Name" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="file" name="image" placeholder="Profile Picture" required>
+            <input type="text" name="bio" placeholder="Bio" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <div class="divider"></div>
+            <button type="submit">Register</button>
             <div class="toggle-link" onclick="toggleForms()">Already have an account? Login here.</div>
-        </div>
+        </form>
     </div>
 
     <script>
@@ -46,5 +165,6 @@
             registerForm.classList.toggle('active');
         }
     </script>
+
 </body>
 </html>

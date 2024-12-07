@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
+    <style>
+        /* Reset basic styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background: #212121;
+            color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            background-image: url('https://st4.depositphotos.com/3051589/25590/i/450/depositphotos_255904538-stock-photo-contact-us-customer-support-hotline.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .container {
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 100%;
+            animation: fadeIn 1.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .header {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #f5a623;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .field {
+            position: relative;
+        }
+
+        .field input,
+        .field textarea {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .field input:focus,
+        .field textarea:focus {
+            border-color: #f5a623;
+            box-shadow: 0 0 6px rgba(245, 166, 35, 0.3);
+        }
+
+        .field textarea {
+            resize: none;
+            min-height: 120px;
+        }
+
+        .button {
+            text-align: center;
+        }
+
+        .button button {
+            background: #f5a623;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .button button:hover {
+            background: #ff7f00;
+            box-shadow: 0 8px 20px rgba(245, 126, 0, 0.4);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            .header {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">Get in Touch</div>
+        <form action="https://api.web3forms.com/submit" method="POST">
+            <input type="hidden" name="access_key" value="6d764a78-f837-4015-8b2e-be42160d2c56">
+            <div class="field">
+                <input type="text" placeholder="Your Name" name="Name" required>
+            </div>
+            <div class="field">
+                <input type="email" placeholder="Your Email" name="email_id" required>
+            </div>
+            <div class="field">
+                <input type="text" placeholder="Subject" name="subject" required>
+            </div>
+            <div class="field">
+                <textarea placeholder="Your Message..." name="message" required></textarea>
+            </div>
+            <div class="button">
+                <button type="submit">Send Message</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
