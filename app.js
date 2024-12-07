@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const expressSession = require("express-session")
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const cookieParser = require("cookie-parser");
 
 require('dotenv').config()
